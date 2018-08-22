@@ -1,0 +1,46 @@
+extends layout.pug
+block append head
+  link(rel="stylesheet", href="/css/loginstyle.css")
+block append scripts
+  script(type="text/javascript", src="/js/register.js")    
+
+block content
+  .wrapper
+    //- form.form-signin(action="/register2", method="post" autocomplete="off" enctype="multipart/form-data") 
+    form.form-signin(action="/register", method="post" autocomplete="off" )
+      div(align="center")
+        h2.form-signin-heading.customfont &#xf234; #{message}
+      div.ava(align="center")
+        img#userava(src="images/no_ava.png" alt="No avatar")
+        div.file_upload
+          input(type="file", id="file-input", name="ava", accept=".png, .jpg, .jpeg, .gif", onchange="readSingleFile(this)")
+        div#spinner
+
+      p
+        span.customfont.inputicons &#xe808;
+        input.form-control(name="name", type="text", placeholder="name", required="", autofocus="")
+      p
+        span.customfont.inputicons &#xe808;
+        input.form-control(name="secondname", type="text", placeholder="second name", required="")
+      p
+        span.customfont.inputicons &#xe812;
+        input.form-control(name="email", type="text", placeholder="e-mail", required="")
+      //- p
+      //-   span.customfont.inputicons &#xe800;
+      //-   input.form-control(name="login", type="text", placeholder="login", required="")     
+      p
+        span.customfont.inputicons &#xe806;
+        input.form-control(name="pwd", type="password", placeholder="password")                 
+      p
+        span.customfont.inputicons &#xe81b;
+        input.form-control(name="age", type="date", min="1970-01-01")
+      p
+        span.customfont.inputicons &#xf228;
+        select.form-control(name="gender")
+          option(value="empty" selected)
+          option.customfont.male(value="male") Male
+          option.customfont.female(value="female") Female
+
+      button.btn.btn-large.btn-primary.btn-block(type="submit") Sign in
+      div(align="center")
+        a(href="/login") Login

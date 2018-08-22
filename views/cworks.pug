@@ -1,0 +1,109 @@
+extends layout.pug
+
+block append head
+  link(rel="stylesheet", href="/css/style.css")
+
+block content
+  #wrapper
+    #wrapper-top  
+      h3.heading 
+        a.heading.customfont(href="/app") &#xe803; 
+        span Control works:
+    #wrapper-bottom
+      #wrapper-actions
+        if (user)
+          #wrapper-act-btns
+            #logout.action-wrapper
+              a.customfont.action-btn(href="/logout") &#xe80c;
+      #wrapper-users
+        //- h3 Control works:
+        div    
+          each val in data
+            div.answblock
+              div(style="background-color: #decb9b;")
+                a(data-toggle="collapse" href="#"+val.userid) &darr;&darr;&darr;
+                span #{val.userid} : 
+                b #{val.username} : 
+                i #{val.created} 
+                if (user && user.role == 'admin')
+                  a.customfont(style="color:red;float:right;" href="/delete/cwork/" + val._id) &#xe802;
+              div.collapse(id=val.userid)
+                ol
+                  li
+                    div.question Напишите структуру HTML документа
+                    div.answer #{val.answer.q1}
+                  li
+                    div.question Нарисуйте красный прямоугольник с желтым текстом test по центру(по горизонтали)
+                    div.answer #{val.answer.q2}
+                  li
+                    div.question Какие отличия тега div от span ?
+                    div.answer #{val.answer.q3}
+                  li
+                    div.question Как обозначаются комментарии в html
+                    if (val.answer.q4.match(/<!--.*?-->/))
+                      div.answer(style="background-color: #cbd886") #{val.answer.q4}
+                    else
+                      div.answer(style="background-color: tomato") #{val.answer.q4}
+                  li
+                    div.question Создайте ссылку на сайт Google
+                    if (val.answer.q5.match(/<a href="http:\/\/www.*>.*<\/a>/))
+                      div.answer(style="background-color: #cbd886") #{val.answer.q5}
+                    else
+                      div.answer(style="background-color: tomato") #{val.answer.q5}
+                  li
+                    div.question Создайте ненумерованный список продуктов на пикник
+                    if (val.answer.q6.match(/\<ul\b[^>]*>([.\n\s\t\>]*<li>.*<\/li>)*[.\n\s\t\>]*<\/ul>/))
+                      div.answer(style="background-color: #cbd886") #{val.answer.q6}
+                    else
+                      div.answer(style="background-color: tomato") #{val.answer.q6}
+                  li
+                    div.question Зачем нужен тег &lt;head&gt; ?
+                    div.answer #{val.answer.q7}
+                  li
+                    div.question Выберите правильный вариант установки фона страницы
+                    if (val.answer.q8 == "a3")
+                      div.answer(style="background-color: #bde897") #{val.answer.q8}
+                    else
+                      div.answer(style="background-color: tomato") #{val.answer.q8}
+                  li
+                    div.question Выберите правильный способ создания текстового поля
+                    if (val.answer.q9 == "a1")
+                      div.answer(style="background-color: #bde897") #{val.answer.q9}
+                    else
+                      div.answer(style="background-color: tomato") #{val.answer.q9}
+                  li
+                    div.question Вставьте изображение на страницу
+                    if (val.answer.q10.match(/<img\b src=\"\w+.\w+\" alt=\"*"/))
+                      div.answer(style="background-color: #cbd886") #{val.answer.q10}
+                    else
+                      div.answer(style="background-color: tomato") #{val.answer.q10}
+                  li
+                    div.question Какие минимальные аттрибуты нужно указать для тега form ?
+                    if (val.answer.q11.match(/(?=.*action)(?=.*method).*/))
+                      div.answer(style="background-color: #cbd886") #{val.answer.q11}
+                    else
+                      div.answer(style="background-color: tomato") #{val.answer.q11}
+                  li
+                    div.question Напишите CSS selector для span где текст span 2:
+                    div.answer #{val.answer.q12}
+          script.
+            $('div.answblock a.customfont').click(function (e) {
+              //e.preventDefault();
+              $link = $(this);
+              console.log($link.attr('href'));
+              $.ajax({
+                  type: 'GET',
+                  url: $link.attr('href'),
+                  //- contentType: 'application/json',
+                  error: function (err) {
+                      console.log("error - " + err);
+                  },
+                  success: function () {
+                      console.log("success ");
+                  }
+              });
+            });
+          if (user && user.role == 'admin')
+            div(style="text-align:center")
+              a(href='/delete/cworks') Delete All works
+

@@ -1,0 +1,32 @@
+doctype
+html
+  head
+    title #{title}
+    script(type="text/javascript", src="/js/jquery-3.1.1.js")
+    link(rel="stylesheet", href="/css/bootstrap.min.css")
+    link(rel="stylesheet", href="/css/fontello.css")
+    link(rel="stylesheet", href="/css/fontello-codes.css")
+    link(rel="stylesheet", href="/css/loginstyle.css")
+    script(type="text/javascript", src="/js/bootstrap.min.js")
+
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+  body
+    .wrapper
+      form.form-signin(action="/login", method="post" autocomplete="off")
+        div(align="center")
+          h2.form-signin-heading.customfont &#xe801; #{message}
+        p
+          span.customfont.inputicons &#xe812;
+          input.form-control(name="email", type="text", placeholder="e-mail", required="", autofocus="")
+        p
+          span.customfont.inputicons &#xf13e;
+          input.form-control(name="pwd", type="password", placeholder="password")
+        span(style="color: #00a9ff;") #{errMsg}
+        .checkbox
+          label
+            input(name="rememberMe", type="checkbox")
+            | Remember me
+        button.btn.btn-large.btn-primary.btn-block.customfont(type="submit") &#xe80c; Log in
+        div.registerBlock
+          a(href="/register", style="color: Gray").customfont &#xf234; Create account

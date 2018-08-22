@@ -1,0 +1,71 @@
+extends layout.pug
+
+block append head
+  link(rel="stylesheet", href="/css/style.css")
+  link(rel="stylesheet", href="/css/adduser.css")
+  link(rel="stylesheet", href="/css/groups.css")
+  //- link(rel="stylesheet", href="/css/users.css")
+block append scripts
+  script(type="text/javascript", src="/js/register.js")
+
+  #wrapper
+    #wrapper-top
+      h3.heading
+        a.heading.customfont(href="/app") &#xe801;   
+        span Blotter
+
+    #wrapper-bottom
+      #wrapper-actions
+        #wrapper-act-btns
+          #logout.action-wrapper
+            a.customfont.action-btn(href="/logout") &#xe80c;
+      #wrapper-groups
+
+      #wrapper-users
+        //- form.form-signin(action="/register", method="post" autocomplete="off")
+        form.form-signin(action="/register2", method="post" autocomplete="off" enctype="multipart/form-data") 
+          div
+            h4.customfont &#xf234; #{message}
+          div(style="display: flex;")
+            div.ava
+              //- img(src="../images/no_ava.png", alt="No avatar")
+              img#userava(src="images/no_ava.png" alt="No avatar")
+              div.file_upload
+                input(type="file", id="file-input", name="ava", accept=".png, .jpg, .jpeg, .gif", onchange="readSingleFile(this)")
+              div#spinner                
+            div
+              p
+                span.customfont.inputicons &#xe808;
+                input.form-control(name="name", type="text", placeholder="name", required="", autofocus="")
+              p
+                span.customfont.inputicons &#xe808;
+                input.form-control(name="secondname", type="text", placeholder="second name", required="")
+              p
+                span.customfont.inputicons &#xe812;
+                input.form-control(name="email", type="text", placeholder="e-mail", required="")  
+              p
+                span.customfont.inputicons &#xe806;
+                input.form-control(name="pwd", type="password", placeholder="password")
+              p
+                span.customfont.inputicons &#xe81b;
+                input.form-control(name="age", type="date", min="1970-01-01")
+              p
+                span.customfont.inputicons &#xf228;
+                select.form-control(name="gender")
+                  option(value="empty" selected)
+                  option.customfont.male(value="male") Male
+                  option.customfont.female(value="female") Female
+              p
+                span.customfont.inputicons &#xe81c;
+                select.form-control(name="role")
+                  option.customfont.female(value="user") user
+                  option.customfont.female(value="viewer") viewer
+                  option.customfont.male(value="admin") admin
+              p
+                span.customfont.inputicons &#xe808;
+                //- input.form-control(name="group", type="text", placeholder="groupname", required="")
+                select.form-control(name="group")
+                  each group in groups
+                    option(value=group.id)= group.name
+              button.btn.btn-large.btn-primary.btn-block(type="submit") + Add user
+

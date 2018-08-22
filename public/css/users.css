@@ -1,0 +1,87 @@
+
+.action_edit {
+	margin-right: 2px;
+}
+.action_edit:hover {
+	color: #8dc2d0;
+	margin-right: 2px;
+}
+.action_delete:hover {
+	color: tomato;
+}
+.action_active {
+	color: #886c6c;
+	margin-right: 2px;
+}
+
+.actionBtns button {
+	margin-right: 2px;
+}
+.data-key {
+	color: #657690;
+	/*font-weight: 800;*/
+}
+.ava {
+	width: 100px;
+	height: 100px;
+	margin-top: 6px;
+	border: 1px solid #9e9eb5;
+	border-radius: 10px;
+	background:repeating-radial-gradient(circle at 0 0, #e7f3ff, #e6e6e6 20px ); 
+	position: relative;
+}
+.ava>img {
+	width: 100%;
+	height: 100%;
+	border-radius: inherit;
+}
+div.nameph {
+	font-size: 4em;
+	text-align: center;
+	color: #b2cad6;
+	margin-top: 9%;
+}
+
+#wrapper-users {
+	flex-wrap: wrap;
+	overflow-y: scroll;
+	width: 100%;
+}
+
+#wrapper-users>h4 {
+	margin-left: 20px;
+	margin-bottom: 0;
+}
+#wrapper-users p {
+	position: relative;
+	margin-left: 10%;
+}
+
+.user_block {
+	border: 1px solid lightgrey;
+	border-radius: 10px;
+	margin: 6px;
+	padding: 10px;
+	display: inline-block;
+	min-width: 22%;
+	color: grey;
+	/*background-image: radial-gradient( #fffefc, #efefef	);*/
+	background: linear-gradient( 45deg, #fff, #fff 50%, #0000 50%, #00000036 );
+    background-size: 2px 2px;
+}
+.user_block:hover {
+	border-color: #3690d2;
+}
+.user_block .actionBtns {
+	opacity: 0.5;
+}
+.male {
+		/*background-image: radial-gradient( #fffefc, #f3f7fb	);*/
+		background: linear-gradient( 45deg, #fff, #fff 50%, #5283b500 50%, #4388b152 );
+		background-size: 2px 2px;
+}
+.female {
+		/*background-image: radial-gradient( #fffefc, #fff5f6	);*/
+		background: linear-gradient( 45deg, #fff, #fff 50%, #c773732e 50%, #e6afaf80 );
+		background-size: 2px 2px;		
+}

@@ -1,0 +1,117 @@
+html, body  {
+	height: 100%;
+	margin: 0;
+}
+
+.font11 {
+	font-size: 11px;
+}
+.customfont {
+	font-family: 'fontello';
+}
+#wrapper {
+	height:100vh;
+}
+#wrapper-top {
+	border: 1px solid grey;
+	background-image: linear-gradient(110deg, #04A8FB 1%, #871faf 100%);
+}
+#wrapper-bottom {
+	display: flex;
+  	height: calc(100% - 60px);
+	border: 1px solid grey;
+}
+#wrapper-actions {
+	background-color: #5b6988;
+	padding-top: 10%;
+}
+#wrapper-actions>div {
+	width: 50px;
+}
+
+#wrapper-questions {
+	width: 50%;
+	margin: 10px auto;
+}
+
+h4 {
+	color: #4a5d6b !important;
+}
+
+li {
+	height: 100%;
+	width: 96%;
+	padding-left: 10px;
+	padding-bottom: 10px;
+	position: relative;
+}
+li::before {
+	position: absolute;
+	left: -30px;
+	content: "";
+	width: 30px;
+	height: inherit;
+	border-top-left-radius: 10px;
+	border-bottom-left-radius: 10px;
+	background-color: #a6e1f5;
+	z-index: -10;
+}
+#wrapper-questions li>input[type="text"] {
+	width: 300px;
+}
+#wrapper-questions input[type="button"] {
+	color: white;
+	padding: 10px;
+	width: 20%;
+	border-radius: 4px;
+	text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+	background: rgb(28, 184, 65);
+}
+#wrapper-questions input[type="button"]:hover {
+	background: #6075cc;
+	width: 40%;
+	transition: width 1s, background 1s;
+}
+#wrapper-questions li:nth-of-type(odd) { background-color: #ffe4d0;/* фон нечетных строк */ }
+#wrapper-questions li:nth-of-type(even) { background-color: #e0eef7;/* фон четных строк */ }
+
+.answblock {
+	background-color: #fff1d0;
+	padding-left: 2%;
+	margin: 2px;
+}
+.question {
+	background-color: #ffcf84;
+	width: 40%;
+}
+.answer {
+	width: 40%;
+	background-color: #fdf7e2;
+}
+
+#countdown {
+	position: fixed;
+	top: 40%;
+	left: 4px;
+	width: 60px;
+
+	text-align: center;
+	border: 1px solid #849496;
+	background-color: #59a73a;
+	-webkit-box-shadow: 7px 6px 9px -6px rgba(0,0,0,0.75);
+	-moz-box-shadow: 7px 6px 9px -6px rgba(0,0,0,0.75);
+	box-shadow: 7px 6px 9px -6px rgba(0,0,0,0.75);
+}
+#countdown>p:nth-of-type(1) {
+	font-size: 32px;
+	color: white;
+	margin: 0;
+}
+
+#countdown>p:nth-of-type(2) {
+	font-size: 20px;
+	color: white;
+	margin: 0;
+}
+
+

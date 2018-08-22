@@ -1,0 +1,132 @@
+extends layout.pug
+block prepend head
+  link(rel="stylesheet", href="/css/style.css")
+  link(rel="stylesheet", href="/css/groups.css")
+  link(rel="stylesheet", href="/css/users.css")
+
+block append scripts
+  script(type="text/javascript", src="/js/underscore-min.js")
+  script(type="text/javascript", src="/js/backbone-min.js")
+  script(type="text/javascript", src="/js/app.js")
+
+block content
+  script(type="text/template", id="user-template")
+    div.user_data
+      div
+        <% if ( active ) { %>
+          span(style="color:#01bd01;") &#10687;
+        <% } else { %>
+          span &#10686;
+        <% } %>        
+        span.data-key id: 
+        span.font11 <%= _id %>
+      div(style="display:flex;")
+        div.ava
+          <% if ( ava != null) { %>
+            //- img(src!="../uploads/<%= ava %>", title!="<%= ava %>")
+            img(src!="https://res.cloudinary.com/sergs/image/upload/c_thumb,g_face,h_100,w_100/"+ img_api_key +"/<%= ava %>", title!="<%= ava %>")
+          <% } else { %>
+            //- img(src="../images/no_ava.png", title!="no ava")
+            div.nameph
+              span!= '<%= name.charAt(0)%>' 
+              span!='<%= secondname.charAt(0)%>'
+          <% } %>         
+        div(style="margin-left: 10px;")
+          div
+            span.data-key name: 
+            span
+              b!= ' <%= name %>'
+          div
+            span.data-key sname: 
+            span
+              b!= ' <%= secondname %>'
+          div
+            span.data-key.customfont &#xe81b;
+            span!= ' <%= age %>'
+            span ,  
+            <% if ( gender =='male' ) { %>
+              span.customfont &#xf222;
+            <% } else if (gender =='female' ) { %>
+              span.customfont &#xf221;
+            <% } else { %>
+              span ?
+            <% } %>
+          div
+            span.data-key.customfont &#xe81c;
+            span!= ' <%= role %>'
+          div
+            span.data-key.customfont &#xe810;
+            span.font11!= ' <%= email %>'
+          div
+            span.font11!= '<%= created.toLocaleString() %>'
+      if ( user.role == 'admin' )
+        div.actionBtns
+          <% if ( !active ) { %>
+            span
+              button.active.btn.btn-primary.btn-xs(data-userid!= '<%= _id %>') Set active
+          <% } else { %>
+            span
+              button.active.btn.btn-secondary.btn-xs(data-userid!= '<%= _id %>') Set inactive
+          <% } %>
+            span
+              button.edit.btn.btn-warning.btn-xs(data-userid!= '<%= _id %>') Edit
+            span
+              button.delete.btn.btn-danger.btn-xs(data-userid!= '<%= _id %>') Delete
+
+  script(type="text/template", id="group-template")
+    div(style="display:flex;")
+      div(style="width:15px;")
+          <% if ( current ) { %>
+            span(style="color:#bce4bc;") &#10687;
+          <% } else { %>
+            span.action_current &#10686;
+          <% } %> 
+      div(style="width:100px;")
+        a(href!= "#group/<%= id %>/users", style="display:block;")
+          //- span <%= _id %>:
+          span <%= name %>
+      div(style="width:20%;")
+        span(style="color: #cacaca;") <%= numOfUsers %>
+      if ( user.role == 'admin' )
+        div(style="color:#6d6d5a")
+          span.customfont.action_edit &#xe80a;
+        <% if ( active ) { %>
+          div
+            span(style="color:#6e7f5e;").customfont.action_active &#xf13e;
+        <% } else { %>
+          span.customfont.action_active &#xe806;
+        <% } %> 
+        <% if ( numOfUsers == 0 ) { %>
+          div(style="color:#a5665b")
+            span.customfont.action_delete &#xf147;
+        <% } %>
+
+  #wrapper
+    #wrapper-top
+      h3.heading
+        a.heading.customfont(href="/app") &#xe803;
+        span &nbsp; Blotter
+
+    #wrapper-bottom
+      #wrapper-actions
+        #wrapper-act-btns
+          if ( user.role == 'admin' )
+            #add-user.action-wrapper
+              a.customfont.action-btn(href="/adduser") &#xf234;
+          .action-wrapper
+            a.customfont.action-btn(href="/view/cworks") &#xe815;
+          #logout.action-wrapper
+            a.customfont.action-btn(href="/logout") &#xe80c;
+      #wrapper-groups
+        h3.customfont.heading &#xf0e8; Groups:
+        if ( user.role == 'admin' )
+          form#addNewGroup
+            input(type="text" id="newgroup" placeholder="group name" required )
+            input(type="submit" value="+" )        
+        #groupsList        
+          #wrapper-groups-list
+      #wrapper-users
+        span.customfont Group users
+        a.action-btn.customfont(href="/#") &#xe80f;        
+        #users-list
+

@@ -1,0 +1,142 @@
+doctype
+html
+  head
+    title Survey
+    link(rel="stylesheet", href="/css/style.css")
+    link(rel="stylesheet", href="/css/bootstrap.min.css")
+    script.
+      window.onload = function () {
+        if (localStorage.getItem("counter")) {
+          var value = localStorage.getItem("counter");
+        } else {
+          var value = 15;
+        }
+        var minEl = document.querySelector('#countdown>p:nth-of-type(1)');
+        var secEl = document.querySelector('#countdown>p:nth-of-type(2)');
+        startTimer(value, minEl, secEl);
+      };
+
+      function sendForm() {
+        document.querySelector("input[type='button']").disabled=true;
+        document.questform.submit();
+      }
+
+      function startTimer(value, minEl, secEl) {
+        var secElValue = 0;
+        var x = setInterval(function() {
+          if (secElValue == -1) {
+            secElValue = 59;
+            value--;
+          }
+          localStorage.setItem("counter", value);
+          minEl.innerHTML = value;
+          secEl.innerHTML = secElValue;
+          if (value > 15 && value < 11) {
+            document.querySelector('#countdown').style.background = "#a4a73a";
+          }
+          if (value > 5 && value < 10) {
+            document.querySelector('#countdown').style.background = "#a77c3a";
+          }
+          if (value < 5) {
+            document.querySelector('#countdown').style.background = "tomato";
+          }
+          // console.log(value, secElValue);
+          if (value == 0 && secElValue == 0) {
+            localStorage.removeItem("counter");
+            clearInterval(x);
+            document.questform.submit();
+          }
+          secElValue--;
+        }, 1000);
+      }
+
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+  body
+
+    #wrapper
+      #wrapper-top  
+        h3.heading Control work: #{userdata.username}
+      #countdown
+        p --
+        p --
+      #wrapper-questions
+        form(name="questform", action="/survey", method="post", onSubmit="return false")
+          //- input(type="text" style="display:none" name="username" value= userdata.id)
+          ol
+            li
+              h4 Напишите структуру HTML документа
+              textarea(name="q1", placeholder="basic html template", cols="30", rows="10")
+            hr
+            li
+              h4 Нарисуйте красный прямоугольник с желтым текстом test по центру(по горизонтали)
+              textarea(name="q2", cols="30")
+            hr
+            li
+              h4 Какие отличия тега div от span ?
+              textarea(name="q3", cols="30")
+            hr
+            li
+              h4 Как обозначаются комментарии в html
+              input(type="text", name="q4")
+            hr
+            li
+              h4 Создайте ссылку на сайт Google
+              input(type="text", name="q5")
+            hr
+            li
+              h4 Создайте ненумерованный список продуктов на пикник
+              textarea(name="q6", cols="30", rows="4")
+            hr
+            li
+              h4 Что пишут в теге &lt;head&gt; и зачем?
+              textarea(name="q7", cols="30")
+            hr
+            li
+              h4 Выберите правильный вариант установки фона страницы
+              input(type="radio", name="q8", value="a1")
+              |  &lt;background&gt; yellow &lt;/background&gt;
+              br
+              input(type="radio", name="q8", value="a2")
+              |  &lt;body background="yellow"&gt;
+              br
+              input(type="radio", name="q8", value="a3")
+              |  &lt;body style="background-color:yellow;"&gt;
+              br                
+            hr
+            li
+              h4 Выберите правильный способ создания текстового поля
+              input(type="radio", name="q9", value="a1")
+              |  &lt;input type="text"&gt;
+              br
+              input(type="radio", name="q9", value="a2")
+              |  &lt;input type="textfield"&gt;
+              br
+              input(type="radio", name="q9", value="a3")
+              |  &lt;textinput type="text"&gt;
+              br
+            hr
+            li
+              h4 Вставьте изображение на страницу
+              input(type="text", name="q10")
+            hr            
+            li
+              h4 Какие минимальные аттрибуты нужно указать для тега form ?
+              input(type="text", name="q11")
+            hr
+            li
+              h4 Напишите CSS selector для выделенного span (где текст span 2):
+              pre='<div class="level1">\n    <div>\n        <span> span 1 </span>\n    </div>\n    <div>\n        '
+                b(style="color:#b35419")='<span> span 2 </span>\n'
+                ='    </div>\n</div>'
+              input(type="text", name="q12")
+          div(style="text-align:center")      
+            input(type="button", value="      Go!     ", onClick="sendForm()")
+
+
+
+
+
+
+
+
