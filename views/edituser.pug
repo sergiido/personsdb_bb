@@ -1,0 +1,71 @@
+extends layout.pug
+
+block append head
+  link(rel="stylesheet", href="/css/style.css")
+  link(rel="stylesheet", href="/css/groups.css")
+  link(rel="stylesheet", href="/css/adduser.css")
+block append scripts
+  script(type="text/javascript", src="/js/register.js")
+
+  #wrapper
+    #wrapper-top
+      h3.heading
+        a.heading.customfont(href="/app") &#xe803; 
+        span Blotter
+
+    #wrapper-bottom
+      #wrapper-actions
+        #wrapper-act-btns
+          #logout.action-wrapper
+            a.customfont.action-btn(href="/logout") &#xe80c;
+      #wrapper-groups
+
+      #wrapper-users
+        form.form-signin(action="/userupdate", method="post" autocomplete="off" enctype="multipart/form-data") 
+          div
+            h4.customfont &#xf234; #{title} - not working server side yet
+          div(style="display: flex;")
+            div.ava
+              if ( user[0].ava != null)
+                img(src!="https://res.cloudinary.com/sergs/image/upload/v1534505961/"+ user[0].ava)
+              else
+                div.nameph
+                  span= user[0].name.charAt(0)
+                  span= user[0].secondname.charAt(0)
+              div.file_upload
+                input(type="file", id="file-input", name="ava", accept=".png, .jpg, .jpeg, .gif", onchange="readSingleFile(this)")
+            div
+              p
+                span.customfont.inputicons &#xe808;
+                input.form-control(name="name", type="text", placeholder="name", required="", value=user[0].name)
+              p
+                span.customfont.inputicons &#xe808;
+                input.form-control(name="secondname", type="text", placeholder="second name", required="", value=user[0].secondname)
+              p
+                span.customfont.inputicons &#xe812;
+                input.form-control(name="email", type="text", placeholder="e-mail", required="", value=user[0].email)
+              p
+                span.customfont.inputicons &#xe81b;
+                input.form-control(name="age", type="date", min="1970-01-01", value=user[0].age)
+              p
+                span.customfont.inputicons &#xf228;
+                select.form-control(name="gender")
+                  - var genders = ['', 'male', 'female']
+                  each val in genders
+                    if ( user[0].gender == val )
+                      option.customfont(value=val, selected)= val
+                    else
+                      option.customfont(value=val)= val
+              p
+                span.customfont.inputicons &#xe81c;
+                select.form-control(name="role")
+                  - var userRoles = ['user', 'viewer', 'admin']
+                  each val in userRoles
+                    if ( user[0].role == val )
+                      option.customfont(value=val, selected)= val
+                    else
+                      option.customfont(value=val)= val
+
+              p
+                button.btn.btn-large.btn-primary.btn-block(type="submit") Update user
+
