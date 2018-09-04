@@ -49,7 +49,6 @@ window.onload = function(){
             return 'group/' + this.groupid + '/users';
         },
         initialize: function(options) {
-            // console.log(options.groupId);
             this.groupid = options.groupId;
             // console.log('Users collection initialized', this.models);
             this.on('add', function(item) {
@@ -113,6 +112,13 @@ window.onload = function(){
             this.listenTo(this.collection, "reset", this.handleReset);
         },
         render: function() {
+
+            // console.log(App.groups.get(this.collection.groupid));
+            let groupname = App.groups.get(this.collection.groupid).attributes.name;
+            // console.log(this.collection.groupid);
+            $('#wrapper-users>span').html(" &#xf2c3; Users of: " + groupname);
+            $('#wrapper-users>a').attr("href", "#tojson/"+this.collection.groupid);
+
             this.$el.empty();
             this.collection.each(function(user){
                 // console.log(user.attributes._id);
@@ -123,6 +129,13 @@ window.onload = function(){
         handleReset: function() {
             // console.log("reset " + JSON.stringify(this.collection));
             this.render();
+
+            [].forEach.call(document.querySelectorAll('img[data-src]'), function(img) {
+              img.setAttribute('src', img.getAttribute('data-src'));
+              img.onload = function() {
+                img.removeAttribute('data-src');
+              };
+            });
         },
         addModel: function(user) {
             var userView = new App.Views.User({ model: user });
@@ -193,7 +206,7 @@ window.onload = function(){
             // console.log("group model: " + this.model.get('_id'));
             var groupname = $(e.currentTarget).find('a>span').html();
             $('#wrapper-users>span').html(" &#xf2c3; Users of: " + groupname);
-            $('#wrapper-users>a').attr("href", "tojson/"+this.model.get('_id'));
+            $('#wrapper-users>a').attr("href", "#tojson/"+this.model.get('_id'));
         },
         editGroupName: function(e) {
             e.stopPropagation();
@@ -269,7 +282,7 @@ window.onload = function(){
             // var modelid = event.currentTarget.attributes[0].value;
             // console.log(this.collection);
                 // console.log(this.collection.findWhere({'_id': modelid}) );
-            // App.usersView = new App.Views.Users({collection: new App.Collections.Users()});
+            // App.usersView = new App.Views.Users({collection: new App.Collections.Users()});          
         },
         changeModel: function(group) {
             // console.log(group.id);
@@ -305,10 +318,11 @@ window.onload = function(){
     App.Router = Backbone.Router.extend({
         routes: {
             // ''              : 'home',
-            'group/:id/users'  : 'getGroupUsers'
+            'group/:id/users'  : 'getGroupUsers',
+            'tojson/:id'      : 'toJson'
         },
         initialize: function () {
-            // console.log('router initialized');
+            console.log('router initialized');
             App.groups = new App.Collections.Groups();
             App.groupsView = new App.Views.Groups({collection: App.groups });
             var addNewGroupView = new App.Views.AddNewGroup;
@@ -322,7 +336,7 @@ window.onload = function(){
             // App.groupsView = new App.Views.Groups({collection: new App.Collections.Groups()});
             // App.groupsView.render();
 
-            //console.log('getGroupUsers: ' + id);
+            // console.log('getGroupUsers: ' + id);
             App.users = new App.Collections.Users({groupId: id});
 
             App.users.fetch({reset: true});
@@ -331,8 +345,11 @@ window.onload = function(){
                     App.usersView.filterByGroup(id);
                 }
             });*/
-
             App.usersView = new App.Views.Users({collection: App.users });
+        },
+        toJson: function(id) {
+            $('#users-list').text(JSON.stringify(App.users));
+            // console.log(JSON.stringify(App.users.models[0].attributes));
         }
     });
 
