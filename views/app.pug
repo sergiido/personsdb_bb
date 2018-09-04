@@ -24,7 +24,7 @@ block content
         div.ava
           <% if ( ava != null) { %>
             //- img(src!="../uploads/<%= ava %>", title!="<%= ava %>")
-            img(src!="https://res.cloudinary.com/sergs/image/upload/c_thumb,g_face,h_100,w_100/"+ img_api_key +"/<%= ava %>", title!="<%= ava %>")
+            img(data-src!="https://res.cloudinary.com/sergs/image/upload/c_thumb,g_face,h_100,w_100/"+ img_api_key +"/<%= ava %>", title!="<%= ava %>", alt!="<%= ava %> loading...")
           <% } else { %>
             //- img(src="../images/no_ava.png", title!="no ava")
             div.nameph
@@ -69,7 +69,7 @@ block content
               button.active.btn.btn-secondary.btn-xs(data-userid!= '<%= _id %>') Set inactive
           <% } %>
             span
-              button.edit.btn.btn-warning.btn-xs(data-userid!= '<%= _id %>') Edit
+              a.edit.btn.btn-warning.btn-xs(href!= '/user/<%= _id %>') Edit
             span
               button.delete.btn.btn-danger.btn-xs(data-userid!= '<%= _id %>') Delete
 
