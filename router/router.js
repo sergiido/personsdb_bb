@@ -147,7 +147,7 @@ module.exports = function(app, client) {
 							groupid: doc.id,
 							email: fields.email,
 							// login: req.body.login,
-							pwd: req.body.pwd,
+							pwd: fields.pwd,
 							role: "user",
 							ava: file.ava.name || null,
 							created: new Date(),
@@ -176,7 +176,7 @@ module.exports = function(app, client) {
 			// console.log(req.session.user.id);
 			database.collection("users").findOne({ _id: ObjectId(req.session.user.id)}, function(err, user) {
 				// console.log(user.groupid);
-				database.collection("users").update({ "_id" : ObjectId(req.session.user.id) }, {$set: {"lastlogin": new Date()}});
+				database.collection("users").updateOne({ "_id" : ObjectId(req.session.user.id) }, {$set: {"lastlogin": new Date()}});
 				if (!user.cwork) {
 					res.render('survey', {userdata: req.session.user});
 				} else {
@@ -224,7 +224,7 @@ module.exports = function(app, client) {
 	});
 
 	app.put('/user/:id', checkAuth, (req, res) => {
-		database.collection("users").update({ "_id" : ObjectId(req.params.id) }, {$set: {"active": req.body.active}});
+		database.collection("users").updateOne({ "_id" : ObjectId(req.params.id) }, {$set: {"active": req.body.active}});
 		// console.log(req.body.active);
 		res.sendStatus(200);
 	});
@@ -299,7 +299,7 @@ module.exports = function(app, client) {
 	app.put('/group/:id', checkAuth, (req, res) => {
 		console.log('PUT: ' + req.params.id );
 		console.log(JSON.stringify(req.body));
-		database.collection("groups").update( { id: req.body.id}, { $set: { "name": req.body.name, "active": req.body.active} });
+		database.collection("groups").updateOne( { id: req.body.id}, { $set: { "name": req.body.name, "active": req.body.active} });
 		res.sendStatus(200);
 	});
 
@@ -314,9 +314,9 @@ module.exports = function(app, client) {
 	app.get('/group/update/current/:id', (req,res) => {
 		//let id = parseInt(req.params.id);
 		let id = req.params.id;
-		database.collection("groups").update( { current: true}, { $set: { current: false } },
+		database.collection("groups").updateOne( { current: true}, { $set: { current: false } },
 			function (err, result) {
-				database.collection("groups").update( { id: id }, { $set: { current: true } });
+				database.collection("groups").updateOne( { id: id }, { $set: { current: true } });
 				res.sendStatus(200);
 			});
 	});
@@ -359,6 +359,10 @@ module.exports = function(app, client) {
 	});
 	
 	app.get('/delete/cwork/:id', checkAuth, (req, res) => {
+		database.collection("cworks").find({ "_id" : ObjectId(req.params.id) }).toArray(function(err, docs){
+			// console.log(JSON.stringify(docs));
+			database.collection("users").updateOne({ "_id" : ObjectId(docs.userid) }, {$set: {"cwork": false}});
+		});
 		database.collection("cworks").deleteOne( { "_id" : ObjectId(req.params.id) } );
 		res.sendStatus(200);
 	});
