@@ -62,7 +62,12 @@ label {
 
 .registerBlock {
 	text-align: center;
-	padding-top: 10px
+	padding-top: 10px;
+	border: 1px solid #bbbbbb;
+	border-radius: 3px;
+	margin-top: 5px;
+	padding-bottom: 3px;
+	padding-top: 2px;
 }
 
 .form-control {

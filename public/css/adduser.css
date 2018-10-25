@@ -46,6 +46,10 @@
   width: 100%;
   height: 100%;
   border-radius: inherit;
+
+  object-fit: cover;
+  object-position: 0 20%;
+
 }
 
 
@@ -58,3 +62,9 @@ form {
   margin-left: 20px;
 }
 
+div.nameph {
+  font-size: 4em;
+  text-align: center;
+  color: #b2cad6;
+  margin-top: 9%;
+}
