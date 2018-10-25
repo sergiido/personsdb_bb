@@ -1,4 +1,5 @@
 window.onload = function(){
+    //https://github.com/dmytroyarmak/backbone-contact-manager
 
     window.App = {
         Views: {},
@@ -85,6 +86,7 @@ window.onload = function(){
                     console.log(model);
                 }
             });
+            this.$el.remove();
         },
         toggleActive: function(e) {
             e.stopPropagation(); //disable editUser
@@ -96,10 +98,10 @@ window.onload = function(){
             console.log("model: " + this.model.get('_id') + " in edit mode");
         },
         mouseEnter: function() {
-            this.$el.find('.actionBtns').css('opacity','1');
+            this.$el.find('.actionBtns').css('opacity', '1');
         },
         mouseLeave: function() {
-            this.$el.find('.actionBtns').css('opacity','0.5');
+            this.$el.find('.actionBtns').css('opacity', '0.5');
         }
     });
 
@@ -107,17 +109,16 @@ window.onload = function(){
     App.Views.Users = Backbone.View.extend({
         el: '#wrapper-users>#users-list',
         initialize: function() {
-            this.listenTo(this.collection, "remove", this.removeModel);
+            // this.listenTo(this.collection, "remove", this.removeModel);
             this.listenTo(this.collection, "change", this.changeModel);
             this.listenTo(this.collection, "reset", this.handleReset);
         },
         render: function() {
-
             // console.log(App.groups.get(this.collection.groupid));
             let groupname = App.groups.get(this.collection.groupid).attributes.name;
             // console.log(this.collection.groupid);
             $('#wrapper-users>span').html(" &#xf2c3; Users of: " + groupname);
-            $('#wrapper-users>a').attr("href", "#tojson/"+this.collection.groupid);
+            $('#wrapper-users>a').attr("href", "#tojson/" + this.collection.groupid);
 
             this.$el.empty();
             this.collection.each(function(user){
@@ -144,11 +145,12 @@ window.onload = function(){
         removeModel: function(user) {
             // console.log(user.id);
             // this.collection.remove(user);
-            this.render();
+            // this.handleReset();
+            console.log(this.collection);
         },
         changeModel: function(user) {
             // console.log(user.id);
-            this.render();
+            this.handleReset();
         }
     });
 
@@ -319,7 +321,7 @@ window.onload = function(){
         routes: {
             // ''              : 'home',
             'group/:id/users'  : 'getGroupUsers',
-            'tojson/:id'      : 'toJson'
+            'tojson/:id'       : 'toJson'
         },
         initialize: function () {
             console.log('router initialized');
