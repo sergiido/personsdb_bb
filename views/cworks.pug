@@ -2,6 +2,7 @@ extends layout.pug
 
 block append head
   link(rel="stylesheet", href="/css/style.css")
+  link(rel="stylesheet", href="/css/users.css")
 
 block content
   #wrapper
@@ -19,7 +20,7 @@ block content
         //- h3 Control works:
         div    
           each val in data
-            div.answblock
+            div.answblock(data-id=val._id)
               div(style="background-color: #decb9b;")
                 a(data-toggle="collapse" href="#"+val.userid) &darr;&darr;&darr;
                 span #{val.userid} : 
@@ -88,7 +89,7 @@ block content
                     div.answer #{val.answer.q12}
           script.
             $('div.answblock a.customfont').click(function (e) {
-              //e.preventDefault();
+              e.preventDefault();
               $link = $(this);
               console.log($link.attr('href'));
               $.ajax({
@@ -99,7 +100,8 @@ block content
                       console.log("error - " + err);
                   },
                   success: function () {
-                      console.log("success ");
+                      //- console.log(JSON.stringify(this) + " success ");
+                      $link.parent().parent().remove();
                   }
               });
             });
